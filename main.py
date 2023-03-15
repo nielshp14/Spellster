@@ -8,8 +8,9 @@ import keyboard
 import time
 
 
-alreadyStarted = False
+textToSpeach.setLanguage('danish')
 
+alreadyStarted = False
 while (keyboard.is_pressed("esc") == False):
     startButton = keyboard.is_pressed("å") and keyboard.is_pressed("ctrl")
     
