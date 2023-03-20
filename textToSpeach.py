@@ -5,6 +5,7 @@ import time
 import re
 import keyboard
 from concurrent.futures import ThreadPoolExecutor
+import GUI 
 
 # creates ttx engine
 engine = pyttsx3.init()
