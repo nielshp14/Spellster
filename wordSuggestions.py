@@ -1,44 +1,84 @@
 
 import numpy as np
 
+fullform = np.loadtxt("ods_fullforms_2020-08-26.csv", dtype="str", delimiter="\t", encoding='UTF-8', )
+misspelled = np.loadtxt("ddo_misspellings_2020-08-26.csv", dtype= "str", delimiter="\t", encoding='UTF-8')
+wordFrq = np.loadtxt("lemma-30k-2017.txt", dtype="str", delimiter="\t", encoding="UTF-8")
 
 
-fullformWordlist = np.loadtxt("ods_fullforms_2020-08-26.csv", dtype="str", delimiter="\t", encoding='UTF-8', )
-misspelledwords = np.loadtxt("ddo_misspellings_2020-08-26.csv", dtype= "str", delimiter="\t", encoding='UTF-8')
+class Node:
+      def __init__(self, char):
+        self.char = char
+        self.children = {}
+        self.endOfWord = False
+        self.correctSpelling = ""
 
-
-def suggestWord(letters):
-    letters = letters.lower()
-
-    print("letters: ", letters)
-    result = [[],[]]
-    
-                
-    for word in fullformWordlist    :
-        if len(result[0]) >= 5:
-                break
-        elif word[0].lower().startswith(letters):
-                result[0].append(word[0].lower())
-                result[1].append(word[3])
-
-    if len(result[0]) <= 7:
-        for word in misspelledwords    :
-            if len(result[0]) >= 7:
-                return result
-            elif word[0].lower().startswith(letters):
-                result[0].append(word[1].lower())
-                result[1].append("ukendt")
-                    
-          
-            #print("word: ", word[0].lower(), ", ordklasse", word[3])
+class Trie:
+    def __init__(self):
         
+        self.root = Node("")
+        
+        
+    def insertWord(self, word, correctSpelling): 
+      
+        node = self.root
+        for letter in word: 
+            if letter in node.children:
+                node = node.children[letter] 
+            else:
+                newNode  = Node(letter)
+                node.children[letter] = newNode
+                node = newNode
 
-print(suggestWord("r"))
+        node.endOfWord = True # when there are no more letters
+        node.correctSpelling = correctSpelling
+    
+    def goThrough(self, node, word):
+        if node.endOfWord:
+            if len(self.output) >= 4:
+                return 0 
+            self.output.append(node.correctSpelling)
+        for child in node.children.values():
+            self.goThrough(child, word + node.char)
+      
+     
+                 
+    def autocomplete(self, word):
+        node = self.root
+        self.output = []
+        for i, letter in enumerate(word):
+            if letter in node.children:
+                node = node.children[letter]
+            else:
+                self.goThrough(node, word[:(i-1)])
 
-#print(fullformWordlist[0,3])
+                
+        self.goThrough(node, word[:-1])
+
+        return self.output
+    
 
 
 
+t = Trie()
 
-#print(fullformWordlist[:100, 0])
+for word in wordFrq[:,1][:]:
+    try:
+        word = word.strip().lower()
+        t.insertWord(word, word) 
+    except:
+        print(word)
 
+for row in misspelled:
+    try:
+        
+        #word = word.strip().lower()
+        t.insertWord(row[0], row[1]) 
+    except:
+        print(word)
+for word in fullform[:,0][:]:
+    try:
+        word = word.strip().lower()
+        t.insertWord(word, word) 
+    except:
+        print(word)
