@@ -6,7 +6,7 @@ import re
 import keyboard
 import threading
 from concurrent.futures import ThreadPoolExecutor
-import GUI 
+import GUI
 
 isInDanish = True
 wordsPerMinute = 200
@@ -96,9 +96,9 @@ def speakSentences(sentences:list[str], stopEvent: threading.Event) -> None:
         engine.runAndWait()       
         
         
-def updateGUI():
-    GUI.window.update_idletasks()
-    GUI.window.update()
+# def updateGUI():
+#     GUI.window.update_idletasks()
+#     GUI.window.update()
     
 
 
@@ -121,10 +121,12 @@ def initSpeakSentences(sentences:list[str]) -> None:
                 break
             
             time.sleep(0.01)
+            
 
 
 # TODO this function does not copy the text correctly if the windows where the text is located,
-#  is inactive. This is very noticeable when using the gui button 
+# is inactive. This is very noticeable when using the gui button 
+# a possible fix is just to constantly copy what is selected but that seems like a bad solution
 def speakSelected() -> None:
     
     # copy selected text
@@ -143,3 +145,6 @@ def speakSelected() -> None:
     initSpeakSentences(sentences)
     print("done speaking")
         
+        
+def getWordsPerMinute() -> int:
+    return wordsPerMinute

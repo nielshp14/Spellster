@@ -6,7 +6,7 @@ import GUI
 import keyboard
 import time
 
-# GUI.showWords(["Hej", "med", "dig.", "you", "be", "lokking", "cute", "today.", "but", "you", "do", "that", "avry", "day"])
+# GUI.showWords(["Hej", "but", "you", "do", "that", "avry", "day"])
 
 alreadyStarted = False
 while (not keyboard.is_pressed("esc")):
@@ -32,3 +32,4 @@ while (not keyboard.is_pressed("esc")):
     
     # stops the program from using too much computing power
     time.sleep(0.01)
+
