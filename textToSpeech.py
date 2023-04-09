@@ -6,12 +6,17 @@ import re
 import keyboard
 import threading
 from concurrent.futures import ThreadPoolExecutor
-import GUI
 
 isInDanish = True
-wordsPerMinute = 200
+wordsPerMinute = 300
 
+def setWordsPerMinute(newWordsPerMinute: int) -> None:
+    global wordsPerMinute
+    wordsPerMinute = newWordsPerMinute
 
+def setLanguage(toDanish:bool) -> None:
+    global isInDanish
+    isInDanish = toDanish
 
 canceled = False
 
@@ -52,9 +57,7 @@ def split_into_sentences(text) -> list:
     sentences = [s.strip() for s in sentences]
     return sentences
 
-def setWordsPerMinute(engine,wordsPerMinute: int) -> pyttsx3.Engine:
-    engine.setProperty('rate', wordsPerMinute)
-    return engine
+
     
 def setDanish(engine) -> pyttsx3.Engine:
     voices = engine.getProperty('voices')
@@ -86,7 +89,7 @@ def speakSentences(sentences:list[str], stopEvent: threading.Event) -> None:
         engine = setDanish(engine)
     
     if(wordsPerMinute != 200):
-        engine = setWordsPerMinute(engine, wordsPerMinute)
+        engine.setProperty('rate', wordsPerMinute)
     
     for sentence in sentences:
         if(stopEvent.is_set()):
@@ -108,6 +111,9 @@ def initSpeakSentences(sentences:list[str]) -> None:
         
         # boolean that can be passed by reference to other thread
         stopEvent = threading.Event()
+        
+        # deferred import to avoid circular import
+        from GUI import updateGUI
         
         # Call the speak function in a second thread
         secondThread = executer.submit(speakSentences, sentences, stopEvent)

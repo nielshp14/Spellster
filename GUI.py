@@ -1,6 +1,5 @@
 import tkinter as tk
 
-import textToSpeech 
 window = tk.Tk()
 window.title("Spellster")
 
@@ -30,7 +29,8 @@ titleBar.bind("<B1-Motion>", moveApp)
 
 
 def playPressed():
-    textToSpeech.speakSelected()
+    from textToSpeech import speakSelected
+    speakSelected()
     print("Play button has been pressed")
 
 playButton = tk.Button(titleBar, text="p", height=1, width=3, command=playPressed)
@@ -96,10 +96,10 @@ wordsPerMinuteLabel.grid(column=0,row=1)
 wordsPerMinuteVariable = tk.StringVar() 
 
 def setupWPM():
-    
-
     def wordsPerMinuteChange(event) -> None:
         newWordsPerMinute = wordsPerMinuteVariable.get()
+        from textToSpeech import setWordsPerMinute
+        setWordsPerMinute(newWordsPerMinute)
         print("New words er minute: " + newWordsPerMinute)
         
     wordsPerMinuteInput = tk.Entry(optionPanel, textvariable=wordsPerMinuteVariable, width=10)
@@ -109,9 +109,9 @@ def setupWPM():
 
     # TODO Der er en error som gør at nedestående kode ikke fungere. Der står at det mugeligthis er en circular import error
 
-
-    wordsPerMinute = textToSpeech.getWordsPerMinute() # could it be that this is used before anything ells regarding textToSpeach
-    wordsPerMinuteInput.insert(0,200)
+    # deferred import to avoid circular import
+    from textToSpeech import wordsPerMinute
+    wordsPerMinuteInput.insert(0,wordsPerMinute)
 
 
 suggestionAmountLabel = tk.Label(optionPanel, text="Suggestion amount: ")

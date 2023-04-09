@@ -1,4 +1,3 @@
-
 # this is our files
 import textToSpeech
 import GUI 
@@ -32,4 +31,3 @@ while (not keyboard.is_pressed("esc")):
     
     # stops the program from using too much computing power
     time.sleep(0.01)
-
