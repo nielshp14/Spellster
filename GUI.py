@@ -57,6 +57,8 @@ def setupTitleBar() -> None:
 
 
     def languagePressed():
+        from textToSpeech import setLanguage,isInDanish
+        setLanguage(not isInDanish)
         print("Language button has been pressed")
 
     languageButton = tk.Button(titleBar, text="L", height=1, width=3, command=languagePressed)
@@ -64,7 +66,7 @@ def setupTitleBar() -> None:
 
 
     # adds empty space for column nr 3
-    titleBar.columnconfigure(3, minsize=100)
+    titleBar.columnconfigure(3, minsize=120)
 
 
     def closeWindow():
@@ -122,7 +124,7 @@ def setupOptionPanel() -> None:
         print("new font Size: " + str(fontSize))
 
     global fontSizeOption
-    fontSizeOption = Option(optionPanel,"FontSize:               ",0,fontSizeChange,str(fontSize))
+    fontSizeOption = Option(optionPanel,"FontSize:                   ",0,fontSizeChange,str(fontSize))
 
     def wordsPerMinuteChange(event: Union[tk.Event,None],optionResult:tk.StringVar):
         newWordsPerMinute:str = optionResult.get()
@@ -138,7 +140,7 @@ def setupOptionPanel() -> None:
 
     from textToSpeech import wordsPerMinute
     global wordsPerMinuteOption
-    wordsPerMinuteOption = Option(optionPanel,"Words per minute:", 1, wordsPerMinuteChange, str(wordsPerMinute))
+    wordsPerMinuteOption = Option(optionPanel,"Words per minute:    ", 1, wordsPerMinuteChange, str(wordsPerMinute))
 
 
     def suggestionAmountChange(event: Union[tk.Event,None],optionResult:tk.StringVar):
@@ -151,7 +153,27 @@ def setupOptionPanel() -> None:
         print("new suggestionAmount: " + str(newSuggestionAmount))
     
     global suggestionAmountOption
-    suggestionAmountOption = Option(optionPanel,"Suggestion size: ",2,suggestionAmountChange)
+    suggestionAmountOption = Option(optionPanel,"Suggestion size:        ",2,suggestionAmountChange)
+
+
+    onTopLabel = tk.Label(optionPanel,text="Show window on top:",font=('Arial', fontSize),anchor="w")
+    onTopLabel.grid(column=0, row=3)
+
+    onTopVar = tk.IntVar(value=1)
+
+    def onTopChange():
+        onTop = onTopVar.get()
+        if (onTop == 1):
+            window.attributes("-topmost", True)
+        else:
+            window.attributes("-topmost", False)
+
+    onTopCheckbox = tk.Checkbutton(optionPanel,variable=onTopVar,onvalue=1,offvalue=0,command=onTopChange)
+    onTopCheckbox.grid(column=1,row=3)
+    
+
+
+
 
 
 setupOptionPanel()
