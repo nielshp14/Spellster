@@ -98,11 +98,6 @@ def speakSentences(sentences:list[str], stopEvent: threading.Event) -> None:
         engine.say(sentence)
         engine.runAndWait()       
         
-        
-# def updateGUI():
-#     GUI.window.update_idletasks()
-#     GUI.window.update()
-    
 
 
 def initSpeakSentences(sentences:list[str]) -> None:
@@ -134,7 +129,6 @@ def initSpeakSentences(sentences:list[str]) -> None:
 # is inactive. This is very noticeable when using the gui button 
 # a possible fix is just to constantly copy what is selected but that seems like a bad solution
 def speakSelected() -> None:
-    
     # copy selected text
     pyautogui.hotkey('ctrl','c')
     time.sleep(0.05)
@@ -150,7 +144,3 @@ def speakSelected() -> None:
     
     initSpeakSentences(sentences)
     print("done speaking")
-        
-        
-def getWordsPerMinute() -> int:
-    return wordsPerMinute

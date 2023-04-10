@@ -5,7 +5,7 @@ import GUI
 import keyboard
 import time
 
-# GUI.showWords(["Hej", "but", "you", "do", "that", "avry", "day"])
+GUI.showWords(["Hej", "but", "you", "do", "that", "avry", "day"])
 
 alreadyStarted = False
 while (not keyboard.is_pressed("esc")):
@@ -19,7 +19,7 @@ while (not keyboard.is_pressed("esc")):
         alreadyStarted = False
     
     if(keyboard.is_pressed('b')):
-        GUI.clearWords()
+        GUI.showWords(["Hej", "but", "you", "do", "that", "avry", "day"])
     
     # Update the GUI
     GUI.window.update_idletasks()
