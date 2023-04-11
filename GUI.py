@@ -18,7 +18,6 @@ window.attributes("-topmost", True)
 # delead the existing title bar
 window.overrideredirect(True)
 
-
 titleBar = tk.Frame(window, relief="raised", bd=1)
 titleBar.grid(sticky='EW')
 
