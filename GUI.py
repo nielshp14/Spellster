@@ -65,7 +65,7 @@ def setupTitleBar() -> None:
 
 
     # adds empty space for column nr 3
-    titleBar.columnconfigure(3, minsize=120)
+    titleBar.columnconfigure(3, minsize=220)
 
 
     def closeWindow():
