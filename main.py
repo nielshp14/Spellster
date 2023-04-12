@@ -1,32 +1,33 @@
-
-# this is our file
-import textToSpeach
+# this is our files
+import textToSpeech
 import GUI 
 
-import numpy
-import math
 import keyboard
 import time
 
-
-textToSpeach.setLanguage('english')
+GUI.showWords(["Hej", "but", "you", "do", "that", "avry", "day"])
 
 alreadyStarted = False
-while (keyboard.is_pressed("esc") == False):
+while (not keyboard.is_pressed("esc")):
+ 
     startButton = keyboard.is_pressed("ctrl") and keyboard.is_pressed("å")
-    
     if(startButton and alreadyStarted == False):
-        textToSpeach.speakSelectet()
+        textToSpeech.speakSelected()
         alreadyStarted = True
     
     if(startButton == False):
         alreadyStarted = False
     
+    if(keyboard.is_pressed('b')):
+        GUI.showWords(["Hej", "but", "you", "do", "that", "avry", "day"])
     
     # Update the GUI
     GUI.window.update_idletasks()
     GUI.window.update()
     
-    # stops the program from using too much computing power
-    time.sleep(0.05)
+    # Stop the program
+    if(not GUI.GUIOpen):
+        break
     
+    # stops the program from using too much computing power
+    time.sleep(0.01)
