@@ -6,11 +6,11 @@ misspelled = np.loadtxt("ddo_misspellings_2020-08-26.csv", dtype= "str", delimit
 wordFrq = np.loadtxt("lemma-30k-2017.txt", dtype="str", delimiter="\t", encoding="UTF-8")
 
 word = ''
-
+startSuggestionSize = 3
 def suggestions(word, key):
     
     suggestedWords = []
-    if key == 'space':
+    if key == 'space' or key == 'enter':
                 word = ''
     elif key == 'backspace':
                 word = word[:-1]
@@ -22,7 +22,8 @@ def suggestions(word, key):
                 suggestedWords = t.autocomplete(word)
                 print(suggestedWords)
     return word, suggestedWords
-
+def changeSuggestionSize(size):
+    t.suggestionSize = size
 class Node:
       def __init__(self, char):
         self.char = char
@@ -31,9 +32,10 @@ class Node:
         self.correctSpelling = ""
 
 class Trie:
-    def __init__(self):
+    def __init__(self, suggestionSize):
         
         self.root = Node("")
+        self.suggestionSize = suggestionSize
         
         
     def insertWord(self, word, correctSpelling): 
@@ -49,10 +51,10 @@ class Trie:
 
         node.endOfWord = True # when there are no more letters
         node.correctSpelling = correctSpelling
-    
+
     def goThrough(self, node, word):
         if node.endOfWord:
-            if len(self.output) >= 4:
+            if len(self.output) >= self.suggestionSize:
                 return 0 
             self.output.append(node.correctSpelling)
         for child in node.children.values():
@@ -77,7 +79,7 @@ class Trie:
 
 
 
-t = Trie()
+t = Trie(startSuggestionSize)
 
 for w in wordFrq[:,1][:]:
     try:
