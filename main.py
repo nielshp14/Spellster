@@ -42,6 +42,7 @@ while (not keyboard.is_pressed("esc")):
         if(startButton == False):
             alreadyStarted = False
         
+        
         for key in (list(string.ascii_lowercase) + list(string.digits)+ ['space', 'backspace']):
             if keyboard.is_pressed(key) and not newestChar == key:
                 newestChar = key
@@ -51,13 +52,18 @@ while (not keyboard.is_pressed("esc")):
         if (not newestChar == '' and not keyboard.is_pressed(newestChar)):
               newestChar = ''
 
+        
         # Update the GUI 
         GUI.window.update_idletasks() 
         GUI.window.update()
         
+        GUI.saveActiveWindow()
+        
         # Stop the program
         if(not GUI.GUIOpen): 
             break
+        
+        
         
         # stops the program from using too much computing power
         time.sleep(0.01)

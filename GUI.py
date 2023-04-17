@@ -1,10 +1,13 @@
 import tkinter as tk
 from typing import Callable, Union
 import keyboard
+import pygetwindow
 
 window = tk.Tk()
 suggestionPanel = tk.Frame(window,height=40,width=10,bg="white")
 optionPanel = tk.Frame(window)
+
+activeWindow = ""
 
 optionsOpened = False
 
@@ -36,6 +39,7 @@ def setupTitleBar() -> None:
 
     def playPressed():
         from textToSpeech import speakSelected
+        openActiveWindow()
         speakSelected()
         print("Play button has been pressed")
 
@@ -206,6 +210,7 @@ def closeOptions() -> None:
 
 
 def buttonPressed(writtenWord, chosenWord: str):
+    openActiveWindow()
     
     writeWord = chosenWord[len(writtenWord):]
     keyboard.write(writeWord)
@@ -232,3 +237,21 @@ def updateGUI():
     window.update_idletasks()
     window.update()
 
+def saveActiveWindow():
+    global activeWindow
+    newActiveWindow = pygetwindow.getActiveWindow()
+    if (newActiveWindow):
+        if (not newActiveWindow.title == activeWindow and newActiveWindow.title != "Spellster"):
+            activeWindow = newActiveWindow.title
+            print(f"Active window title: {newActiveWindow.title}")
+    
+def openActiveWindow():
+    try:
+        # Find the window by its title
+        targetWindow = pygetwindow.getWindowsWithTitle(activeWindow)[0]
+
+        # Bring the window to front and set it as active
+        targetWindow.activate()
+
+    except IndexError:
+        print(f"No window with title '{activeWindow}' found")
