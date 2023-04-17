@@ -5,6 +5,23 @@ fullform = np.loadtxt("ods_fullforms_2020-08-26.csv", dtype="str", delimiter="\t
 misspelled = np.loadtxt("ddo_misspellings_2020-08-26.csv", dtype= "str", delimiter="\t", encoding='UTF-8')
 wordFrq = np.loadtxt("lemma-30k-2017.txt", dtype="str", delimiter="\t", encoding="UTF-8")
 
+word = ''
+
+def suggestions(word, key):
+    
+    suggestedWords = []
+    if key == 'space':
+                word = ''
+    elif key == 'backspace':
+                word = word[:-1]
+    elif len(key) == 1:
+                print(key)
+                word += key
+                print('word ', word) 
+
+                suggestedWords = t.autocomplete(word)
+                print(suggestedWords)
+    return word, suggestedWords
 
 class Node:
       def __init__(self, char):
@@ -62,23 +79,25 @@ class Trie:
 
 t = Trie()
 
-for word in wordFrq[:,1][:]:
+for w in wordFrq[:,1][:]:
     try:
-        word = word.strip().lower()
-        t.insertWord(word, word) 
+        w = w.strip().lower()
+        t.insertWord(w, w) 
     except:
-        print(word)
-
+        print(w)
+print('first file')
 for row in misspelled:
     try:
         
-        #word = word.strip().lower()
+        #w = w.strip().lower()
         t.insertWord(row[0], row[1]) 
     except:
-        print(word)
-for word in fullform[:,0][:]:
+        print(w)
+print('second file')
+for w in fullform[:,0][:]:
     try:
-        word = word.strip().lower()
-        t.insertWord(word, word) 
+        w = w.strip().lower()
+        t.insertWord(w, w) 
     except:
-        print(word)
+        print(w)
+print('done')
