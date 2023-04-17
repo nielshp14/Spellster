@@ -151,9 +151,13 @@ def setupOptionPanel() -> None:
         
         newSuggestionAmount: int = int(newSuggestionAmount)
         print("new suggestionAmount: " + str(newSuggestionAmount))
+        from wordSuggestions import changeSuggestionSize
+        changeSuggestionSize(newSuggestionAmount)
+        
     
     global suggestionAmountOption
-    suggestionAmountOption = Option(optionPanel,"Suggestion size:        ",2,suggestionAmountChange)
+    from wordSuggestions import startSuggestionSize
+    suggestionAmountOption = Option(optionPanel,"Suggestion size:        ",2,suggestionAmountChange, str(startSuggestionSize))
 
 
     onTopLabel = tk.Label(optionPanel,text="Show window on top:",font=('Arial', fontSize),anchor="w")
