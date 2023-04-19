@@ -125,9 +125,7 @@ def initSpeakSentences(sentences:list[str]) -> None:
             
 
 
-# TODO this function does not copy the text correctly if the windows where the text is located,
-# is inactive. This is very noticeable when using the gui button 
-# a possible fix is just to constantly copy what is selected but that seems like a bad solution
+
 def speakSelected() -> None:
     # copy selected text
     pyautogui.hotkey('ctrl','c')
@@ -144,3 +142,14 @@ def speakSelected() -> None:
     
     initSpeakSentences(sentences)
     print("done speaking")
+
+alreadyStarted = False
+def speakIfShortcutIsPressed():
+    global alreadyStarted
+    startButton = keyboard.is_pressed("ctrl") and keyboard.is_pressed("å")
+    if(startButton and alreadyStarted == False):
+        speakSelected()
+        alreadyStarted = True
+     
+    if(startButton == False):
+        alreadyStarted = False

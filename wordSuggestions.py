@@ -1,11 +1,11 @@
-
+import keyboard
 import numpy as np
+import string
 
 fullform = np.loadtxt("ods_fullforms_2020-08-26.csv", dtype="str", delimiter="\t", encoding='UTF-8', )
 misspelled = np.loadtxt("ddo_misspellings_2020-08-26.csv", dtype= "str", delimiter="\t", encoding='UTF-8')
 wordFrq = np.loadtxt("lemma-30k-2017.txt", dtype="str", delimiter="\t", encoding="UTF-8")
 
-word = ''
 startSuggestionSize = 3
 def suggestions(word, key):
     
@@ -24,6 +24,25 @@ def suggestions(word, key):
     return word, suggestedWords
 def changeSuggestionSize(size):
     t.suggestionSize = size
+    
+    
+word = ''
+newestChar = ''
+def updateSuggestions():
+    global newestChar, word
+    
+    for key in (list(string.ascii_lowercase) + list(string.digits)+ ['space', 'backspace', 'enter']):
+        if keyboard.is_pressed(key) and not newestChar == key:
+            newestChar = key
+            word, suggestedWords = suggestions(word, key)
+            
+            
+            from GUI import showWords
+            showWords(word, suggestedWords)
+        
+    if (not newestChar == '' and not keyboard.is_pressed(newestChar)):
+        newestChar = ''    
+    
 class Node:
       def __init__(self, char):
         self.char = char
@@ -103,3 +122,5 @@ for w in fullform[:,0][:]:
     except:
         print(w)
 print('done')
+
+
