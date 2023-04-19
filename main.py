@@ -1,9 +1,13 @@
+import time
+
+
 # this is our files
 import textToSpeech
 import GUI 
+
 import wordSuggestions
-import keyboard
-import time
+import keyboard 
+
 import string
 from concurrent.futures import ThreadPoolExecutor
 
@@ -42,7 +46,7 @@ while (not keyboard.is_pressed("esc")):
         if(startButton == False):
             alreadyStarted = False
         
-        for key in (list(string.ascii_lowercase) + list(string.digits)+ ['space', 'backspace', 'enter']):
+        for key in (list(string.ascii_lowercase) + list(string.digits)+ ['æ', 'ø', 'å', 'space', 'backspace', 'enter']):
             if keyboard.is_pressed(key) and not newestChar == key:
                 newestChar = key
                 word, suggestedWords = wordSuggestions.suggestions(word, key)

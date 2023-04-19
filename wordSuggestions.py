@@ -1,10 +1,13 @@
 
 import numpy as np
+import time
+import csv
+#fullform = np.loadtxt("ods_fullforms_2020-08-26.csv", dtype="str", delimiter="\t", encoding='UTF-8', )
+#misspelled = np.loadtxt("ddo_misspellings_2020-08-26.csv", dtype= "str", delimiter="\t", encoding='UTF-8')
+#wordFrq = np.loadtxt("lemma-30k-2017.txt", dtype="str", delimiter="\t", encoding="UTF-8")
+#wordlist = np.loadtxt('wordlist.csv', dtype='str',delimiter="\t", encoding="UTF-8")
 
-fullform = np.loadtxt("ods_fullforms_2020-08-26.csv", dtype="str", delimiter="\t", encoding='UTF-8', )
-misspelled = np.loadtxt("ddo_misspellings_2020-08-26.csv", dtype= "str", delimiter="\t", encoding='UTF-8')
-wordFrq = np.loadtxt("lemma-30k-2017.txt", dtype="str", delimiter="\t", encoding="UTF-8")
-
+start_time = time.time()
 word = ''
 startSuggestionSize = 3
 def suggestions(word, key):
@@ -36,11 +39,12 @@ class Trie:
         
         self.root = Node("")
         self.suggestionSize = suggestionSize
-        
+
         
     def insertWord(self, word, correctSpelling): 
       
         node = self.root
+        
         for letter in word: 
             if letter in node.children:
                 node = node.children[letter] 
@@ -81,25 +85,46 @@ class Trie:
 
 t = Trie(startSuggestionSize)
 
-for w in wordFrq[:,1][:]:
-    try:
-        w = w.strip().lower()
-        t.insertWord(w, w) 
-    except:
-        print(w)
-print('first file')
-for row in misspelled:
-    try:
+print(time.time() - start_time)
+
+
+
+with open("wordlist.csv", encoding='UTF-8') as csvfile:  
+    data = csv.reader(csvfile, delimiter='\t')
+    for row in data:
         
-        #w = w.strip().lower()
-        t.insertWord(row[0], row[1]) 
-    except:
-        print(w)
-print('second file')
-for w in fullform[:,0][:]:
-    try:
-        w = w.strip().lower()
-        t.insertWord(w, w) 
-    except:
-        print(w)
-print('done')
+        t.insertWord(row[0], row[0])
+
+with open("ddo_misspellings_2020-08-26.csv", encoding='UTF-8') as csvfile:  
+    data = csv.reader(csvfile, delimiter='\t')
+    for row in data:
+        
+        t.insertWord(row[0], row[1])
+        
+
+print(time.time() - start_time)
+
+# for w in wordlist[:][:]:
+#     try:
+#         w = w.strip().lower()
+#         t.insertWord(w, w) 
+#     except:
+#         print(w)
+# print('first file')
+
+# for row in misspelled:
+#     try:
+        
+#         #w = w.strip().lower()
+#         t.insertWord(row[0], row[1]) 
+#     except:
+#         print(w)
+# print('second file')
+# for w in fullform[:,0][:]:
+#     try:
+#         w = w.strip().lower()
+#         t.insertWord(w, w) 
+#     except:
+#         print(w)
+# print('done')
+
