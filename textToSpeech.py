@@ -116,7 +116,7 @@ def initSpeakSentences(sentences:list[str]) -> None:
         while (not secondThread.done()):
             updateGUI()
             # if 'p' is pressed, then stop the text to speech
-            if(keyboard.is_pressed("p")):
+            if(keyboard.is_pressed("esc")):
                 print("stopping the speech")
                 stopEvent.set()
                 break

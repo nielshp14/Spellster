@@ -1,14 +1,12 @@
 import time
-import wordSuggestions
 import keyboard 
 
-# this is our files
+# this is our custom imports
 import textToSpeech
+import wordSuggestions
 import GUI 
 
-
-
-while (not keyboard.is_pressed("esc")):
+while (True):
     textToSpeech.speakIfShortcutIsPressed()
 
     wordSuggestions.updateSuggestions()
