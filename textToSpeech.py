@@ -8,7 +8,7 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 
 isInDanish = True
-wordsPerMinute = 300
+wordsPerMinute = 200
 
 def setWordsPerMinute(newWordsPerMinute: int) -> None:
     global wordsPerMinute

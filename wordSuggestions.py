@@ -37,7 +37,6 @@ def updateSuggestions():
             newestChar = key
             word, suggestedWords = suggestions(word, key)
             
-            
             from GUI import showWords
             showWords(word, suggestedWords)
         

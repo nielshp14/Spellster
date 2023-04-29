@@ -43,7 +43,7 @@ def setupTitleBar() -> None:
         speakSelected()
         print("Play button has been pressed")
 
-    playButton = tk.Button(titleBar, text="p", height=1, width=3, command=playPressed)
+    playButton = tk.Button(titleBar, text="P", height=1, width=3, command=playPressed)
     playButton.grid(row=0,column=0)
 
 
@@ -56,7 +56,7 @@ def setupTitleBar() -> None:
             print("options closed")
         print("Options button has been pressed")
 
-    optionButton = tk.Button(titleBar, text="o", height=1, width=3, command=optionPressed)
+    optionButton = tk.Button(titleBar, text="O", height=1, width=3, command=optionPressed)
     optionButton.grid(row=0,column=1)
 
 
