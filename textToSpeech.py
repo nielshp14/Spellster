@@ -119,7 +119,6 @@ def initSpeakSentences(sentences:list[str]) -> None:
             if(keyboard.is_pressed("esc")):
                 print("stopping the speech")
                 stopEvent.set()
-                break
             
             time.sleep(0.01)
             
