@@ -32,7 +32,7 @@ newestChar = ''
 def updateSuggestions():
     global newestChar, word
     
-    for key in (list(string.ascii_lowercase) + list(string.digits)+ ['space', 'backspace', 'enter']):
+    for key in (list(string.ascii_lowercase) + list(string.digits)+ ['space', 'backspace', 'enter', 'æ', 'ø', 'å']):
         if keyboard.is_pressed(key) and not newestChar == key:
             newestChar = key
             word, suggestedWords = suggestions(word, key)
