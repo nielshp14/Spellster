@@ -63,6 +63,7 @@ class Trie:
         
         for letter in word: 
             if letter in node.children:
+                
                 node = node.children[letter] 
             else:
                 newNode  = Node(letter)
@@ -85,13 +86,15 @@ class Trie:
     def autocomplete(self, word):
         node = self.root
         self.output = []
-        for i, letter in enumerate(word):
+        for letter in word:
             if letter in node.children:
                 node = node.children[letter]
             else:
-                self.goThrough(node, word[:(i-1)])
-
                 
+               self.goThrough(node, word)
+
+        
+
         self.goThrough(node, word[:-1])
 
         return self.output
