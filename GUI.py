@@ -4,34 +4,28 @@ import keyboard
 import pygetwindow
 
 window = tk.Tk()
+titleBar = tk.Frame(window, relief="raised", bd=1)
 suggestionPanel = tk.Frame(window,height=40,width=10,bg="white")
 optionPanel = tk.Frame(window)
 
-activeWindow = ""
-
-optionsOpened = False
+titleBar.grid(sticky='EW')
+suggestionPanel.grid(sticky='ew')
 
 window.title("Spellster")
-
-GUIOpen = True
-fontSize = 12
-
 # set windows always on top
 window.attributes("-topmost", True)
-
 # delead the existing title bar
 window.overrideredirect(True)
 
-titleBar = tk.Frame(window, relief="raised", bd=1)
-titleBar.grid(sticky='EW')
-
-suggestionPanel.grid(sticky='ew')
+activeWindow = ""
+GUIOpen = True
+fontSize = 12
+optionsOpened = False
 
 
 def setupTitleBar() -> None:
     def moveApp(event):
         window.geometry("+" + str(event.x_root) + "+" + str(event.y_root))
-        pass
 
     # <B1-Motion> is when the moused is dragged on the titleBar with mouse button 1
     titleBar.bind("<B1-Motion>", moveApp)
@@ -179,12 +173,10 @@ def setupOptionPanel() -> None:
     onTopCheckbox = tk.Checkbutton(optionPanel,variable=onTopVar,onvalue=1,offvalue=0,command=onTopChange)
     onTopCheckbox.grid(column=1,row=3)
     
-
-
-
-
-
 setupOptionPanel()
+
+
+
 
 def openOptions() -> None:
     global optionsOpened
